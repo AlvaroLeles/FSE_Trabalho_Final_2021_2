@@ -60,28 +60,35 @@ body {
     background-color: #fd3939;
 }
 
+.btnEnviar {
+    background-color:  #0078a8;
+}
+
 .btnEnviar:hover {
     background-color: #009ddb;
 }
 
-.configAlarme p {
-    margin-left: 10px;
+.cadastDisps {
+    display: flex;
+    justify-content: space-between;
+}
+
+.configAlarme span {
     font-size: 20px;
 }
 .frmNovoDisp {
     margin: 20px 0px;
-    display: flex;
+    display: block;
     align-items: flex-end;
 }
 .frmNovoDisp .block {
     display: flex;
     flex-direction: column;
-    margin-right: 5px;
 }
 .frmNovoDisp label {
     font-weight: bold;
 }
-.frmNovoDisp input, select {
+.frmNovoDisp input {
     margin-top: 5px;
     height: 25px;
     border-radius: 5px;
@@ -89,9 +96,11 @@ body {
 .frmNovoDisp select, .controleDispositivos select {
     height: 30px;
     background-color: #ffffff;
+    border-radius: 5px;
+    margin-top: 5px;
 }
 .btnConectDisp{
-    height: 30px;
+    height: 30px !important;
     background-color:  #0078a8;
     color: #ffffff;
     font-weight: bold;
