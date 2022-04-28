@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface de Dispositivos</title>
+   
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="interface.css">
+    <!-- <script src="interface.js" type="text/javascript" language="javascript"></script> -->
+</head>
+<body>
+    <div class="header">
+        <img src="img/LogoUnBTransp.png" alt="Logo UnB" height="50">
+        <h1>Interface de Dispositivos</h1>
+        <div class="idAlunos">
+            <p style="margin-bottom: 5px;">&nbsp;&nbsp;Aline Helena Lermen &nbsp;&nbsp;- 18/0011961</p>
+            <p>Álvaro Leles Guimarães - 18/0096991</p>
+        </div>
+        <!-- <script>
+            MQTTconnect();
+        </script> -->
+    </div>
+    <div class="interface">
+        <h3 style="font-size: x-large; margin-bottom: 20px;">Configuração Alarme:</h3>
+        <div class="downCSV-configAlarme">
+            <div class="configAlarme" style="display: flex;">
+                <button class="btnAlarme" xonclick="turnOnAlarm()">Ligar / Desligar</button>
+                <span style="align-self: center;">Estado: </span>
+                <span style="align-self: center; font-weight: bold;" id="alarm_state">Desligado</span>
+            </div>
+            <div style="margin-top: -50px;">
+                <button class="btnDownCSV" xonclick="downloadCSV()">Baixar Log em CSV</button>
+            </div>
+        </div>
+        <h3 style="font-size: x-large;">Cadastro de Dispositivo:</h3>
+        <div style="display: flex; justify-content: space-between;">
+            <form style="display: block;" class="frmNovoDisp" action="">
+                <div style="display: flex; margin-bottom: 20px;">
+                    <div class="block" style="margin-right: 50px;">
+                        <label for="fname">Id Dispositivo:</label>
+                        <select id="esps" name="esp-id-name"></select>
+                    </div>
+                    <div class="block">
+                        <label for="fname">Nome Entrada:</label>
+                        <input type="text" id="fname" name="input-name">
+                    </div>
+                </div>
+                <div style="display: flex; margin-bottom: 20px;">
+                    <div class="block" style="margin-right: 62px;">
+                        <label for="fname">Nome Saída:</label>
+                        <select name="output-name">
+                            <option value="CHUVEIRO">Chuveiro</option>
+                            <option value="LAMPADA">Lâmpada</option>
+                            <option value="PORTA">Porta</option>
+                            <option value="PORTAO">Portão</option>
+                            <option value="TOMADA">Tomada</option>
+                            <option value="TORNEIRA">Torneira</option>
+                            <option value="VENTILADOR">Ventilador</option>
+                        </select>
+                    </div>
+                    <div class="block">
+                        <label for="fname">Cômodo Dispositivo:</label>
+                        <select name="room-name">
+                            <option value="BANHEIRO">Banheiro</option>
+                            <option value="CORREDOR">Corredor</option>
+                            <option value="COZINHA">Cozinha</option>
+                            <option value="ENTRADA">Entrada</option>
+                            <option value="GARAGEM">Garagem</option>
+                            <option value="QUARTO">Quarto</option>
+                            <option value="SALA">Sala</option> 
+                        </select>
+                    </div>
+                </div>
+                <div style="display: flex;">
+                    <div class="block">
+                        <label for="fname">Entrada Ativa o Alarme?</label>
+                        <select name="alarm">
+                            <option value="y">Sim</option>
+                            <option value="n">Não</option>
+                        </select>
+                    </div>
+                </div>
+                <div style="display: flex;">
+                    <div class="block">
+                        <input class="btnConectDisp" type="button" value="Cadastrar" xonclick="registerRoom()">
+                    </div>
+                </div>
+            </form> 
+            <div class="controleDispositivos" style="margin-top: -24px;">
+                <h3 style="font-size: x-large;">Dispositivos:</h3>
+                <div class="block" style="margin-top: 10px;">
+                    <label for="fname">Desconectar Dispositivo:</label>
+                    <select id="comodos" name="esp-comodo"></select>
+                    <input class="btnVerm btnDesc" type="button" value="Desconectar" xonclick="disconectDisp()">
+                </div>
+                <div class="block">
+                    <label for="fname" style="margin-right: 20px;">Enviar Valor de Saída:</label>
+                    <select id="rooms" name="comodo_nome"></select>
+                    <input type="number" name="saida">
+                    <input class="btnVerm btnEnviar" style="background-color:  #0078a8;" type="button" value="Enviar" xonclick="sendMessage()">
+                </div>
+            </div>
+        </div>
+        <div id="disps"></div>
+    </div>
+</body>
+</html>

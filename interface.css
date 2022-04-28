@@ -1,0 +1,137 @@
+body { 
+	max-width: 1200px; 
+	margin: 0 auto !important; 
+	float: none !important; 
+}
+
+.header {
+    background-color: #595358;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+    .header h1 {
+        align-self: center;
+        font-size: xx-large;
+    }
+
+    .header .idAlunos {
+        align-self: center;
+    }
+
+.interface {
+    margin: 30px 50px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.downCSV-configAlarme {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.btnAlarme, .btnDownCSV, .btnVerm{
+    height: 30px;
+    background-color:  #c40202;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: medium;
+    border: 0px;
+    border-radius: 5px;
+    padding: 5px 12px;
+    transition: 0.2s;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.btnDownCSV {
+    background-color: #1d6f42;
+}
+
+.btnAlarme:hover {
+    background-color: #fd3939;
+}
+.btnDownCSV:hover {
+    background-color: #21a366;
+}
+
+.btnDesc:hover {
+    background-color: #fd3939;
+}
+
+.btnEnviar:hover {
+    background-color: #009ddb;
+}
+
+.configAlarme p {
+    margin-left: 10px;
+    font-size: 20px;
+}
+.frmNovoDisp {
+    margin: 20px 0px;
+    display: flex;
+    align-items: flex-end;
+}
+.frmNovoDisp .block {
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px;
+}
+.frmNovoDisp label {
+    font-weight: bold;
+}
+.frmNovoDisp input, select {
+    margin-top: 5px;
+    height: 25px;
+    border-radius: 5px;
+}
+.frmNovoDisp select, .controleDispositivos select {
+    height: 30px;
+    background-color: #ffffff;
+}
+.btnConectDisp{
+    height: 30px;
+    background-color:  #0078a8;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: medium;
+    border: 0px;
+    border-radius: 5px;
+    padding: 0px 10px;
+    margin-top: 20px !important;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.btnConectDisp:hover{
+    background-color: #009ddb;
+}
+
+.dispositivosConect {
+    margin-top: 20px;
+    padding: 10px;
+    border: 2px solid;
+    border-radius: 10px;
+    border-color: #cbff7c;
+}
+.dispositivosConect .dispositivosConect-title {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 20px;
+}
+.dispositivosConect .title {
+    font-size: larger;
+    color: #0078a8;
+}
+.dispositivosConect-dados {
+    display: flex;
+    justify-content: space-between;
+}
+.dispositivosConect-dados .block {
+    display: flex;
+    margin: 10px 20px;
+}
+.dispositivosConect-dados p {
+    margin-right: 20px;
+}
