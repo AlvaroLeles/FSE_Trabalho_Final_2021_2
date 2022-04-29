@@ -45,6 +45,7 @@ body {
     margin-right: 10px;
     cursor: pointer;
 }
+
 .btnDownCSV {
     background-color: #1d6f42;
 }
@@ -52,6 +53,7 @@ body {
 .btnAlarme:hover {
     background-color: #fd3939;
 }
+
 .btnDownCSV:hover {
     background-color: #21a366;
 }
@@ -76,29 +78,35 @@ body {
 .configAlarme span {
     font-size: 20px;
 }
+
 .frmNovoDisp {
     margin: 20px 0px;
     display: block;
     align-items: flex-end;
 }
+
 .frmNovoDisp .block {
     display: flex;
     flex-direction: column;
 }
+
 .frmNovoDisp label {
     font-weight: bold;
 }
+
 .frmNovoDisp input {
     margin-top: 5px;
     height: 25px;
     border-radius: 5px;
 }
+
 .frmNovoDisp select, .controleDispositivos select {
     height: 30px;
     background-color: #ffffff;
     border-radius: 5px;
     margin-top: 5px;
 }
+
 .btnConectDisp{
     height: 30px !important;
     background-color:  #0078a8;
@@ -124,23 +132,28 @@ body {
     border-radius: 10px;
     border-color: #cbff7c;
 }
+
 .dispositivosConect .dispositivosConect-title {
     display: flex;
     justify-content: space-between;
     margin: 10px 20px;
 }
+
 .dispositivosConect .title {
     font-size: larger;
     color: #0078a8;
 }
+
 .dispositivosConect-dados {
     display: flex;
     justify-content: space-between;
 }
+
 .dispositivosConect-dados .block {
     display: flex;
     margin: 10px 20px;
 }
+
 .dispositivosConect-dados p {
     margin-right: 20px;
 }
