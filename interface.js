@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 });
 
 function conectaMQTT() {
-    mqtt = new Paho.MQTT.Client("iot.eclipse.org", Number(8000), "/wss");
+    mqtt = new Paho.MQTT.Client("broker.hivemq.com", 8001, "clientjs");
     var options = {
         timeout: 3,
         onSuccess: inscreveMQTT,
@@ -15,6 +15,7 @@ function conectaMQTT() {
 }
 
 function inscreveMQTT() {
+    console.log("inscreve");
     mqtt.subscribe("fse2021/180096991/#");
     mqtt.subscribe("fse2021/180096991/dispositivos/#");
 }
