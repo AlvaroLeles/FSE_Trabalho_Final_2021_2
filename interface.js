@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function(e) {
 });
 
 function conectaMQTT() {
-    mqtt = new Paho.MQTT.Client("broker.hivemq.com", 8001, "clientjs");
+    mqtt = new Paho.MQTT.Client("broker.hivemq.com", 8000, "clientjs");
     var options = {
         timeout: 3,
         onSuccess: inscreveMQTT,
