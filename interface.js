@@ -52,12 +52,14 @@ function toggleAlarme() {
     {
         estadoAlarme = 1;
         $("#estadoAlarme").text("Ligado");
+        tocaAlarme();
     }
     else
     {
         estadoAlarme = 0;
         $("#estadoAlarme").text("Desligado");
     }
+    adicionaDadoCsv("banheiro", "lampada");
 }
 
 function tocaAlarme()
