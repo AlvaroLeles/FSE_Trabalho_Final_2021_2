@@ -72,11 +72,22 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 void mqtt_start()
 {
     esp_mqtt_client_config_t mqtt_config = {
-        .uri = "mqtt://broker.mqttdashboard.com:8000",
+        .uri = "mqtt://broker.hivemq.com:1883",
     };
     client = esp_mqtt_client_init(&mqtt_config);
     esp_mqtt_client_register_event(client, ESP_EVENT_ANY_ID, mqtt_event_handler, client);
     esp_mqtt_client_start(client);
+}
+
+
+void mqtt_inicia_cliente(){
+    ESP_LOGI(TAG, "Inicializando Cliente");
+    esp_mqtt_client_start(client);
+}
+
+void mqtt_inscreve_cliente(char *topico){
+    ESP_LOGI(TAG, "Inscrevendo Cliente no tópico %s", topico);
+    esp_mqtt_client_subscribe(client, topico, 0);
 }
 
 void mqtt_envia_mensagem(char * topico, char * mensagem)
