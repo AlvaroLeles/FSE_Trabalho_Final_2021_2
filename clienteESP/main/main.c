@@ -7,8 +7,21 @@
 #include "freertos/semphr.h"
 
 #include "wifi.h"
+#include "mqtt.h"
 
 SemaphoreHandle_t conexaoWifiSemaphore;
+SemaphoreHandle_t conexaoMQTTSemaphore;
+
+
+void conectadoWifi(void * params) {
+  while(true) {
+    if(xSemaphoreTake(conexaoWifiSemaphore, portMAX_DELAY)) {
+      // Processamento Internet
+      mqtt_start();
+    }
+  }
+}
+
 
 void app_main(void)
 {
@@ -21,6 +34,9 @@ void app_main(void)
     ESP_ERROR_CHECK(ret);
     
     conexaoWifiSemaphore = xSemaphoreCreateBinary();
+    conexaoMQTTSemaphore = xSemaphoreCreateBinary();
     wifi_start();
+
+    xTaskCreate(&conectadoWifi,  "Conexão ao MQTT", 4096, NULL, 1, NULL);
     
 }
