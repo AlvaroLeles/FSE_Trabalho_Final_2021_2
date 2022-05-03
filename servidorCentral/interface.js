@@ -6,7 +6,7 @@ $(function() {
 });
 
 function conectaMQTT() {
-    mqtt = new Paho.MQTT.Client("broker.mqttdashboard.com", Number(8000), "clientALG");
+    mqtt = new Paho.MQTT.Client("broker.hivemq.com", Number(8000), "clientALG");
 
     mqtt.onConnectionLost = conexaoPerdida;
     mqtt.onMessageArrived = recebeMensagem;
