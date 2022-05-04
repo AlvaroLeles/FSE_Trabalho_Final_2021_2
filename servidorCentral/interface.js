@@ -39,7 +39,9 @@ function enviaMensagem(str, destination) {
 function recebeMensagem(msg) {
     let mensagem = msg.payloadString;
     console.log("Mensagem:" + mensagem);
-    trataMensagem(mensagem);
+    if (!mensagem.includes("fse2021")) {
+        trataMensagem(mensagem);
+    }
 }
 
 function trataMensagem(mensagem) {
@@ -49,7 +51,7 @@ function trataMensagem(mensagem) {
             return
         }        
     }
-    selectBox.options.add(new Option(mensagem));
+    selectBox.options.add(new Option(mensagem, mensagem));
 }
 
 function cadastrarDispositivo() {
@@ -71,6 +73,18 @@ function cadastrarDispositivo() {
     enviaMensagem(topicoEstado, topico);
 
     adicionaDadoCsv(comodo, tipoDispositivo, "cadastra dispositivo")
+
+    var selectBox = document.getElementById('comodos');
+    selectBox.options.add(new Option(idDispositivo, idDispositivo));
+}
+
+function desconectarDispositivo() {
+    const id = document.getElementsByName('esp-comodo')[0].value;
+
+    $("#comodos option[value='"+ id.toString() + "']").remove();
+    $("#esps option[value='"+ id.toString() + "']").remove();
+
+    adicionaDadoCsv(" - ", tipoDispositivo, "desconecta dispositivo")
 }
 
 function toggleAlarme() {
