@@ -49,8 +49,21 @@ function trataMensagem(mensagem) {
             return
         }        
     }
-
     selectBox.options.add(new Option(mensagem));
+}
+
+function cadastrarDispositivo() {
+    const comodo = document.getElementsByName('room-name')[0].value;
+    const tipoDispositivo = document.getElementsByName('output-name')[0].value;
+    const nomeDispositivo = document.getElementsByName('input-name')[0].value;
+    const ativaAlarme = document.getElementsByName('alarm')[0].value;
+
+    console.log("COMODO:", comodo);
+    console.log("TIPO DISPOSITIVO:", tipoDispositivo);
+    console.log("NOME:", nomeDispositivo);
+    console.log("ATIVA ALARME:", ativaAlarme);
+
+    adicionaDadoCsv(comodo, tipoDispositivo, "cadastra dispositivo")
 }
 
 function toggleAlarme() {
@@ -58,20 +71,21 @@ function toggleAlarme() {
     {
         estadoAlarme = 1;
         $("#estadoAlarme").text("Ligado");
-        tocaAlarme();
+        adicionaDadoCsv(" - ", " - ", "ativa alarme");
     }
     else
     {
         estadoAlarme = 0;
         $("#estadoAlarme").text("Desligado");
+        adicionaDadoCsv(" - ", " - ", "desativa alarme");
     }
-    adicionaDadoCsv("banheiro", "lampada");
 }
 
 function tocaAlarme()
 {
     if (estadoAlarme)
     {
+        adicionaDadoCsv("banheiro", "lampada", "dispara alarme");
         let alarme = new Audio('somAlarme.mp3');
         alarme.play();
     }

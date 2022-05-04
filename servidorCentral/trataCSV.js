@@ -11,7 +11,7 @@ const csvData = {
 
 var csvData = [{}]
 
-function adicionaDadoCsv(comodo, dispositivo) {
+function adicionaDadoCsv(comodo, dispositivo, acao) {
     var dataHora = new Date();
     var data = dataHora.getDate() + '-' + (dataHora.getMonth()+1) + '-' + dataHora.getFullYear();
     var hora = dataHora.getHours() + "h" + dataHora.getMinutes() + "m" + dataHora.getSeconds() + "s";
@@ -21,7 +21,7 @@ function adicionaDadoCsv(comodo, dispositivo) {
         hora: hora,
         comodo: comodo,
         dispositivo: dispositivo,
-        acao: "ligar alarme"
+        acao: acao
     })
 
 }
