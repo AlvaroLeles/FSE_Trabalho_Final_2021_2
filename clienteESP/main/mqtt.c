@@ -22,7 +22,7 @@
 
 #define TAG "MQTT"
 
-extern char comodo[50];
+extern char topicoEstado[50];
 
 extern SemaphoreHandle_t conexaoMQTTSemaphore;
 extern SemaphoreHandle_t msgConfigMQTTSemaphore;
@@ -56,9 +56,9 @@ static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
         case MQTT_EVENT_DATA:
             ESP_LOGI(TAG, "MQTT_EVENT_DATA");
 
-            char comodo_aux[50];
-            sprintf(comodo_aux, "%.*s\r", event->data_len, event->data);
-            strcpy(comodo, comodo_aux);
+            char topico_aux[50];
+            sprintf(topico_aux, "%.*s\r", event->data_len, event->data);
+            strcpy(topicoEstado, topico_aux);
 
             printf("TOPIC=%.*s\r\n", event->topic_len, event->topic);
             printf("DATA=%.*s\r\n", event->data_len, event->data);

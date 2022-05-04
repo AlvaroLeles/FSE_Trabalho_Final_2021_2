@@ -66,7 +66,9 @@ function cadastrarDispositivo() {
     console.log("NOME:", nomeDispositivo);
     console.log("ATIVA ALARME:", ativaAlarme);
 
-    enviaMensagem(comodo, topico);
+    const topicoEstado = "fse2021/180096991/" + comodo + "/estado";
+
+    enviaMensagem(topicoEstado, topico);
 
     adicionaDadoCsv(comodo, tipoDispositivo, "cadastra dispositivo")
 }

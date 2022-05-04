@@ -20,7 +20,7 @@ char idDispositivo[19];
 char topicoDispositivo[50];
 char topicoEstado[50];
 
-char comodo[50];
+// char comodo[50];
 
 void defineMacAdress() {
   uint8_t mac_base[6];
@@ -43,11 +43,8 @@ void conectadoWifi(void * params) {
       envia_mensagem_inicializacao();
 
       if(xSemaphoreTake(msgConfigMQTTSemaphore, portMAX_DELAY)) {
-        strcpy(topicoEstado, "fse2021/180096991/");
-        strcat(topicoEstado, comodo);
-        strcat(topicoEstado, "/estado");
-    
-        ESP_LOGI("COMODO", "COMODO do topico: %s", comodo);
+        printf(".");    
+        ESP_LOGI("TOPICO", "topico para estado: %s", topicoEstado);
       }
         
     }
