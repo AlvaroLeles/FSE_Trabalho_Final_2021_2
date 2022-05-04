@@ -39,12 +39,12 @@ function enviaMensagem(str, destination) {
 function recebeMensagem(msg) {
     let mensagem = msg.payloadString;
     console.log("Mensagem:" + mensagem);
-    //trataMensagem(mensagem);
+    trataMensagem(mensagem);
 }
 
 function trataMensagem(mensagem) {
-    let mensagemJSON = JSON.parse(mensagem);
-    console.log(mensagemJSON);
+    var selectBox = document.getElementById('esps');
+    selectBox.options.add(new Option(mensagem));
 }
 
 function toggleAlarme() {
