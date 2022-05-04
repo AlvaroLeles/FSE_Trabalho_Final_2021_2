@@ -14,10 +14,13 @@
 
 SemaphoreHandle_t conexaoWifiSemaphore;
 SemaphoreHandle_t conexaoMQTTSemaphore;
+SemaphoreHandle_t msgConfigMQTTSemaphore;
 
 char idDispositivo[19];
 char topicoDispositivo[50];
+char topicoEstado[50];
 
+char comodo[50];
 
 void defineMacAdress() {
   uint8_t mac_base[6];
@@ -38,6 +41,15 @@ void conectadoWifi(void * params) {
       mqtt_inicia_cliente();
       mqtt_inscreve_cliente(topicoDispositivo);
       envia_mensagem_inicializacao();
+
+      if(xSemaphoreTake(msgConfigMQTTSemaphore, portMAX_DELAY)) {
+        strcpy(topicoEstado, "fse2021/180096991/");
+        strcat(topicoEstado, comodo);
+        strcat(topicoEstado, "/estado");
+    
+        ESP_LOGI("COMODO", "COMODO do topico: %s", comodo);
+      }
+        
     }
   }
 }
@@ -54,6 +66,8 @@ void app_main(void)
     
     conexaoWifiSemaphore = xSemaphoreCreateBinary();
     conexaoMQTTSemaphore = xSemaphoreCreateBinary();
+    msgConfigMQTTSemaphore = xSemaphoreCreateBinary();
+
     wifi_start();
 
     defineMacAdress();

@@ -58,10 +58,15 @@ function cadastrarDispositivo() {
     const nomeDispositivo = document.getElementsByName('input-name')[0].value;
     const ativaAlarme = document.getElementsByName('alarm')[0].value;
 
+    const idDispositivo = document.getElementsByName('esp-id-name')[0].value;
+    const topico = "fse2021/180096991/dispositivos/" + idDispositivo;
+
     console.log("COMODO:", comodo);
     console.log("TIPO DISPOSITIVO:", tipoDispositivo);
     console.log("NOME:", nomeDispositivo);
     console.log("ATIVA ALARME:", ativaAlarme);
+
+    enviaMensagem(comodo, topico);
 
     adicionaDadoCsv(comodo, tipoDispositivo, "cadastra dispositivo")
 }
