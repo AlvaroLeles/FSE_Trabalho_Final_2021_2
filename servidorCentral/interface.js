@@ -44,6 +44,12 @@ function recebeMensagem(msg) {
 
 function trataMensagem(mensagem) {
     var selectBox = document.getElementById('esps');
+    for (let index = 0; index < selectBox.length; index++) {
+        if (selectBox.options[index].text == mensagem) {
+            return
+        }        
+    }
+
     selectBox.options.add(new Option(mensagem));
 }
 
