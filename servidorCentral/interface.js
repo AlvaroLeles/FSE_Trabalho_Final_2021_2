@@ -1,5 +1,6 @@
 var mqtt;
 var estadoAlarme = 0;
+var estadoDispositivo = 0;
 
 $(function() {
     conectaMQTT();
@@ -26,8 +27,8 @@ function conexaoPerdida(responseObject) {
 function inscreveMQTT() {
     console.log("MQTT conectado");
     //mqtt.subscribe("testeALG")
-    mqtt.subscribe("fse2021/180096991/#");
     mqtt.subscribe("fse2021/180096991/dispositivos/#");
+    mqtt.subscribe("fse2021/180096991/#");
 }
 
 function enviaMensagem(str, destination) {
@@ -40,11 +41,15 @@ function recebeMensagem(msg) {
     let mensagem = msg.payloadString;
     console.log("Mensagem:" + mensagem);
     if (!mensagem.includes("fse2021")) {
-        trataMensagem(mensagem);
+        if(!mensagem.includes("+")) {
+            trataMensagemConfig(mensagem);
+        } else {
+            trataMensagemEstado(mensagem);
+        }
     }
 }
 
-function trataMensagem(mensagem) {
+function trataMensagemConfig(mensagem) {
     var selectBox = document.getElementById('esps');
     for (let index = 0; index < selectBox.length; index++) {
         if (selectBox.options[index].text == mensagem) {
@@ -52,6 +57,19 @@ function trataMensagem(mensagem) {
         }        
     }
     selectBox.options.add(new Option(mensagem, mensagem));
+}
+
+function trataMensagemEstado(mensagem) {
+    const valor = mensagem.split("+");
+    const idDispositivo = valor[0];
+    const comodo = valor[2]
+    estadoDispositivo = valor[1];
+    if(estadoAlarme == 1) {
+        adicionaDadoCsv(comodo, " - ", "dispara alarme");
+        tocaAlarme();
+    }
+    // atualizaCard();
+    console.log("Atualiza card: estadoDispositivo =", estadoDispositivo);
 }
 
 function cadastrarDispositivo() {
@@ -68,9 +86,9 @@ function cadastrarDispositivo() {
     console.log("NOME:", nomeDispositivo);
     console.log("ATIVA ALARME:", ativaAlarme);
 
-    const topicoEstado = "fse2021/180096991/" + comodo + "/estado";
+    // const topicoEstado = "fse2021/180096991/" + comodo + "/estado";
 
-    enviaMensagem(topicoEstado, topico);
+    enviaMensagem(comodo, topico);
 
     adicionaDadoCsv(comodo, tipoDispositivo, "cadastra dispositivo")
 
@@ -106,7 +124,6 @@ function tocaAlarme()
 {
     if (estadoAlarme)
     {
-        adicionaDadoCsv("banheiro", "lampada", "dispara alarme");
         let alarme = new Audio('somAlarme.mp3');
         alarme.play();
     }
