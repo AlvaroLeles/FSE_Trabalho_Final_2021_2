@@ -2,6 +2,7 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <string.h>
+#include <stdlib.h>
 #include "esp_system.h"
 #include "esp_event.h"
 #include "esp_netif.h"
@@ -18,11 +19,15 @@
 #include "esp_log.h"
 #include "mqtt_client.h"
 
+#include "driver/gpio.h"
+
 #include "mqtt.h"
 
 #define TAG "MQTT"
 
 extern char comodo[15];
+extern char estadoCentral[3];
+extern int estadoLed;
 
 extern SemaphoreHandle_t conexaoMQTTSemaphore;
 extern SemaphoreHandle_t msgConfigMQTTSemaphore;
@@ -56,13 +61,25 @@ static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
         case MQTT_EVENT_DATA:
             ESP_LOGI(TAG, "MQTT_EVENT_DATA");
 
-            if(event->data_len < 15){
+            if(event->data_len < 2)
+            {
+                char estado_aux[3];
+                sprintf(estado_aux, "%.*s\r", event->data_len, event->data);
+                strcpy(estadoCentral, estado_aux);
+
+                int valorEstado = atoi(estadoCentral);
+
+                estadoLed = valorEstado;
+                gpio_set_level(2, estadoLed); //LED
+            }
+            else if (event->data_len < 15)
+            {
                 char topico_aux[50];
                 sprintf(topico_aux, "%.*s\r", event->data_len, event->data);
                 strcpy(comodo, topico_aux);
                 xSemaphoreGive(msgConfigMQTTSemaphore);
             }
-
+            
             printf("TOPIC=%.*s\r\n", event->topic_len, event->topic);
             printf("DATA=%.*s\r\n", event->data_len, event->data);
 

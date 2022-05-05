@@ -25,6 +25,7 @@ char idDispositivo[19];
 char topicoDispositivo[50];
 char topicoEstado[50];
 char comodo[15];
+char estadoCentral[3];
 
 int estadoLed = 0;
 

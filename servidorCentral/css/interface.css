@@ -46,12 +46,16 @@ body {
     cursor: pointer;
 }
 
+.btnAlarme {
+    background-color:  #0078a8;
+}
+
 .btnDownCSV {
     background-color: #1d6f42;
 }
 
 .btnAlarme:hover {
-    background-color: #fd3939;
+    background-color: #009ddb;
 }
 
 .btnDownCSV:hover {

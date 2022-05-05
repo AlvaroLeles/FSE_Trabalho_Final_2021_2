@@ -43,11 +43,10 @@ function recebeMensagem(msg) {
     let mensagem = msg.payloadString;
     console.log("Mensagem:" + mensagem);
     if (!mensagem.includes("fse2021")) {
-        if(!mensagem.includes("+")) {
+        if(!mensagem.includes("+") && mensagem.includes(":"))
             trataMensagemConfig(mensagem);
-        } else {
+        else if (mensagem.includes("+"))
             trataMensagemEstado(mensagem);
-        }
     }
 }
 
@@ -66,12 +65,23 @@ function trataMensagemEstado(mensagem) {
     const idDispositivo = valor[0];
     const comodo = valor[2]
     estadoDispositivo = valor[1];
-    if(estadoAlarme == 1) {
-        adicionaDadoCsv(comodo, " - ", "dispara alarme");
+    let disp = dispositivos.find(d => d.id == idDispositivo);
+    disp.estado = estadoDispositivo;
+
+    // Remove Dispositivo
+    dispositivos = $.grep(dispositivos, function(dispVez) {
+        return dispVez.id != idDispositivo;
+    });
+    dispositivos.push(disp);
+    populaDisps();
+    console.log("Atualiza card: estadoDispositivo =", estadoDispositivo);
+    let strLigaDesliga = estadoDispositivo === '1' ? 'liga dispositivo' : 'desliga dispositivo';
+    adicionaDadoCsv(disp.comodo, disp.tipo, strLigaDesliga);
+
+    if(estadoAlarme == 1 && disp.ativaAlarme === "y") {
+        adicionaDadoCsv(disp.comodo, disp.tipo, "dispara alarme");
         tocaAlarme();
     }
-    // atualizaCard();
-    console.log("Atualiza card: estadoDispositivo =", estadoDispositivo);
 }
 
 function cadastrarDispositivo() {
@@ -99,8 +109,11 @@ function cadastrarDispositivo() {
     adicionaDadoCsv(comodo, tipoDispositivo, "cadastra dispositivo")
 
     // var selectBox = document.getElementById('comodos');
-    let selectBox = $("#comodos")[0];
-    selectBox.options.add(new Option(idDispositivo, idDispositivo));
+    let selectBoxDescDisp = $("#comodos")[0];
+    selectBoxDescDisp.options.add(new Option(idDispositivo, idDispositivo));
+
+    let selectBoxLigDes = $("#rooms")[0];
+    selectBoxLigDes.options.add(new Option(idDispositivo, idDispositivo));
 
     let comodoExiste = comodos.find(cmd => cmd === comodo);
     if (comodoExiste === undefined)
@@ -111,7 +124,8 @@ function cadastrarDispositivo() {
         tipo: tipoDispositivo,
         nome: nomeDispositivo,
         ativaAlarme: ativaAlarme,
-        id: idDispositivo
+        id: idDispositivo,
+        estado: '0'
     }
 
     dispositivos.push(dispositivo)
@@ -123,12 +137,14 @@ function desconectarDispositivo() {
     // const id = document.getElementsByName('esp-comodo')[0].value;
     const id = $('[name="esp-comodo"]')[0].value;
 
+    let disp = dispositivos.find(d => d.id == id);
+
     $("#comodos option[value='"+ id.toString() + "']").remove();
     $("#esps option[value='"+ id.toString() + "']").remove();
+    $("#rooms option[value='"+ id.toString() + "']").remove();
 
-    adicionaDadoCsv(" - ", " - ", "desconecta dispositivo");
+    adicionaDadoCsv(disp.comodo, disp.tipo, "desconecta dispositivo");
 
-    let dispDesc = dispositivos.find(disp => disp.id === id);
     dispositivos = $.grep(dispositivos, function(disp) {
         return disp.id != id;
     });
@@ -160,6 +176,28 @@ function tocaAlarme()
     }
 }
 
+function ligDesDisp()
+{
+    const idDispositivo = $('[name="comodo_nome"]')[0].value;
+    const topico = "fse2021/180096991/dispositivos/" + idDispositivo;
+
+    let disp = dispositivos.find(disp => disp.id == idDispositivo);
+
+    let estadoEnviar = disp.estado === '1' ? '0' : '1';
+    enviaMensagem(estadoEnviar, topico);
+
+    // Remove Dispositivo
+    dispositivos = $.grep(dispositivos, function(dispVez) {
+        return dispVez.id != idDispositivo;
+    });
+    disp.estado = estadoEnviar;
+    dispositivos.push(disp);
+    populaDisps();
+
+    let strLigaDesliga = estadoEnviar === '1' ? 'liga dispositivo' : 'desliga dispositivo';
+    adicionaDadoCsv(disp.comodo, disp.tipo, strLigaDesliga);
+}
+
 function populaDisps()
 {
     let divDisps = $("#disps")[0];
@@ -175,7 +213,8 @@ function populaDisps()
                                     <p>Id: ${disp.id}</p>
                                     <p>Tipo: ${disp.tipo}</p>
                                     <p>Nome: ${disp.nome}</p>
-                                    <p>Ativa alarme?: ${disp.ativaAlarme === 'n' ? 'Não' : 'Sim'}</p>
+                                    <p>Ativa alarme? ${disp.ativaAlarme === 'n' ? 'Não' : 'Sim'}</p>
+                                    <p>Estado: ${disp.estado === '0' ? 'Desligado' : 'Ligado'}</p>
                                 </div>`;
             htmlDispsComodo += htmlDispVez;
         });
