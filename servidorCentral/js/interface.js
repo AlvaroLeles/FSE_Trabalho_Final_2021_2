@@ -28,7 +28,6 @@ function conexaoPerdida(responseObject) {
 
 function inscreveMQTT() {
     console.log("MQTT conectado");
-    //mqtt.subscribe("testeALG")
     mqtt.subscribe("fse2021/180096991/dispositivos/#");
     mqtt.subscribe("fse2021/180096991/#");
 }
@@ -78,22 +77,17 @@ function trataMensagemEstado(mensagem) {
     let strLigaDesliga = estadoDispositivo === '1' ? 'liga dispositivo' : 'desliga dispositivo';
     adicionaDadoCsv(disp.comodo, disp.tipo, strLigaDesliga);
 
-    if(estadoAlarme == 1 && disp.ativaAlarme === "y") {
+    if(estadoAlarme == 1 && disp.ativaAlarme === "y" && disp.estado === '1') {
         adicionaDadoCsv(disp.comodo, disp.tipo, "dispara alarme");
         tocaAlarme();
     }
 }
 
 function cadastrarDispositivo() {
-    // const comodo = document.getElementsByName('room-name')[0].value;
     const comodo = $('[name="room-name"]')[0].value;
-    // const tipoDispositivo = document.getElementsByName('output-name')[0].value;
     const tipoDispositivo = $('[name="output-name"]')[0].value;
-    // const nomeDispositivo = document.getElementsByName('input-name')[0].value;
     const nomeDispositivo = $('[name="input-name"]')[0].value;
-    // const ativaAlarme = document.getElementsByName('cbAtivaAlarme')[0].value;
     const ativaAlarme = $('#cbAtivaAlarme').is(":checked") === true ? 'y' : 'n';
-    // const idDispositivo = document.getElementsByName('esp-id-name')[0].value;
     const idDispositivo = $('[name="esp-id-name"]')[0].value;
     const topico = "fse2021/180096991/dispositivos/" + idDispositivo;
 
@@ -102,13 +96,10 @@ function cadastrarDispositivo() {
     console.log("NOME:", nomeDispositivo);
     console.log("ATIVA ALARME:", ativaAlarme);
 
-    // const topicoEstado = "fse2021/180096991/" + comodo + "/estado";
-
     enviaMensagem(comodo, topico);
 
     adicionaDadoCsv(comodo, tipoDispositivo, "cadastra dispositivo")
 
-    // var selectBox = document.getElementById('comodos');
     let selectBoxDescDisp = $("#comodos")[0];
     selectBoxDescDisp.options.add(new Option(idDispositivo, idDispositivo));
 
@@ -134,7 +125,6 @@ function cadastrarDispositivo() {
 }
 
 function desconectarDispositivo() {
-    // const id = document.getElementsByName('esp-comodo')[0].value;
     const id = $('[name="esp-comodo"]')[0].value;
 
     let disp = dispositivos.find(d => d.id == id);
@@ -196,6 +186,12 @@ function ligDesDisp()
 
     let strLigaDesliga = estadoEnviar === '1' ? 'liga dispositivo' : 'desliga dispositivo';
     adicionaDadoCsv(disp.comodo, disp.tipo, strLigaDesliga);
+
+    console.log("Est:", estadoAlarme)
+    if(estadoAlarme == 1 && disp.ativaAlarme === "y" && disp.estado === '1') {
+        adicionaDadoCsv(disp.comodo, disp.tipo, "dispara alarme");
+        tocaAlarme();
+    }
 }
 
 function populaDisps()
