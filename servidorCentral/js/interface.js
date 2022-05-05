@@ -45,7 +45,8 @@ function recebeMensagem(msg) {
 }
 
 function trataMensagem(mensagem) {
-    var selectBox = document.getElementById('esps');
+    // var selectBox = document.getElementById('esps');
+    let selectBox = $("#esps")[0];
     for (let index = 0; index < selectBox.length; index++) {
         if (selectBox.options[index].text == mensagem) {
             return
@@ -55,12 +56,16 @@ function trataMensagem(mensagem) {
 }
 
 function cadastrarDispositivo() {
-    const comodo = document.getElementsByName('room-name')[0].value;
-    const tipoDispositivo = document.getElementsByName('output-name')[0].value;
-    const nomeDispositivo = document.getElementsByName('input-name')[0].value;
-    const ativaAlarme = document.getElementsByName('alarm')[0].value;
-
-    const idDispositivo = document.getElementsByName('esp-id-name')[0].value;
+    // const comodo = document.getElementsByName('room-name')[0].value;
+    const comodo = $('[name="room-name"]')[0].value;
+    // const tipoDispositivo = document.getElementsByName('output-name')[0].value;
+    const tipoDispositivo = $('[name="output-name"]')[0].value;
+    // const nomeDispositivo = document.getElementsByName('input-name')[0].value;
+    const nomeDispositivo = $('[name="input-name"]')[0].value;
+    // const ativaAlarme = document.getElementsByName('cbAtivaAlarme')[0].value;
+    const ativaAlarme = $('#cbAtivaAlarme').is(":checked") === true ? 'y' : 'n';
+    // const idDispositivo = document.getElementsByName('esp-id-name')[0].value;
+    const idDispositivo = $('[name="esp-id-name"]')[0].value;
     const topico = "fse2021/180096991/dispositivos/" + idDispositivo;
 
     console.log("COMODO:", comodo);
@@ -74,17 +79,19 @@ function cadastrarDispositivo() {
 
     adicionaDadoCsv(comodo, tipoDispositivo, "cadastra dispositivo")
 
-    var selectBox = document.getElementById('comodos');
+    // var selectBox = document.getElementById('comodos');
+    let selectBox = $("#comodos")[0];
     selectBox.options.add(new Option(idDispositivo, idDispositivo));
 }
 
 function desconectarDispositivo() {
-    const id = document.getElementsByName('esp-comodo')[0].value;
+    // const id = document.getElementsByName('esp-comodo')[0].value;
+    const id = $('[name="esp-comodo"]')[0].value;
 
     $("#comodos option[value='"+ id.toString() + "']").remove();
     $("#esps option[value='"+ id.toString() + "']").remove();
 
-    adicionaDadoCsv(" - ", tipoDispositivo, "desconecta dispositivo")
+    adicionaDadoCsv(" - ", " - ", "desconecta dispositivo")
 }
 
 function toggleAlarme() {
