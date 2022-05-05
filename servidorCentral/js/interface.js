@@ -80,7 +80,6 @@ function cadastrarDispositivo() {
 
 function desconectarDispositivo() {
     const id = document.getElementsByName('esp-comodo')[0].value;
-    const tipoDispositivo = document.getElementsByName('output-name')[0].value;
 
     $("#comodos option[value='"+ id.toString() + "']").remove();
     $("#esps option[value='"+ id.toString() + "']").remove();
