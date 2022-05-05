@@ -1,5 +1,7 @@
 var mqtt;
 var estadoAlarme = 0;
+var comodos = [];
+var dispositivos = [];
 
 $(function() {
     conectaMQTT();
@@ -82,6 +84,22 @@ function cadastrarDispositivo() {
     // var selectBox = document.getElementById('comodos');
     let selectBox = $("#comodos")[0];
     selectBox.options.add(new Option(idDispositivo, idDispositivo));
+
+    let comodoExiste = comodos.find(cmd => cmd === comodo);
+    if (comodoExiste === undefined)
+        comodos.push(comodo);
+
+    let dispositivo = {
+        comodo: comodo,
+        tipo: tipoDispositivo,
+        nome: nomeDispositivo,
+        ativaAlarme: ativaAlarme,
+        id: idDispositivo
+    }
+
+    dispositivos.push(dispositivo)
+
+    populaDisps();
 }
 
 function desconectarDispositivo() {
@@ -91,7 +109,14 @@ function desconectarDispositivo() {
     $("#comodos option[value='"+ id.toString() + "']").remove();
     $("#esps option[value='"+ id.toString() + "']").remove();
 
-    adicionaDadoCsv(" - ", " - ", "desconecta dispositivo")
+    adicionaDadoCsv(" - ", " - ", "desconecta dispositivo");
+
+    let dispDesc = dispositivos.find(disp => disp.id === id);
+    dispositivos = $.grep(dispositivos, function(disp) {
+        return disp.id != id;
+    });
+
+    populaDisps();
 }
 
 function toggleAlarme() {
@@ -117,4 +142,37 @@ function tocaAlarme()
         let alarme = new Audio('somAlarme.mp3');
         alarme.play();
     }
+}
+
+function populaDisps()
+{
+    let divDisps = $("#disps")[0];
+    divDisps.innerHTML = null;
+    
+    comodos.forEach(comodo => {
+        let dispositivosComodo = dispositivos.filter(disp => disp.comodo === comodo);
+
+        let htmlDispsComodo = "";
+
+        dispositivosComodo.forEach(disp => {
+            let htmlDispVez = `<div class="block">
+                                    <p>Id: ${disp.id}</p>
+                                    <p>Tipo: ${disp.tipo}</p>
+                                    <p>Nome: ${disp.nome}</p>
+                                    <p>Ativa alarme?: ${disp.ativaAlarme === 'n' ? 'Não' : 'Sim'}</p>
+                                </div>`;
+            htmlDispsComodo += htmlDispVez;
+        });
+
+        let comodoVez = `<div class="dispositivosConect" id="comodos">
+                                <div class="dispositivosConect-title">
+                                    <h3 id="local" class="title" name="local">${comodo}</h3>
+                                    <h3 id="id_comodo" class="title">${comodo}</h3>
+                                </div>
+                                <div class="dispositivosConect-dados">
+                                    ${htmlDispsComodo}
+                                </div>
+                            </div>`
+        divDisps.innerHTML += comodoVez;
+    })
 }

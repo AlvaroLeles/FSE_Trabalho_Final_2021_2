@@ -145,7 +145,7 @@ body {
 }
 
 .dispositivosConect-dados {
-    display: flex;
+    display: block;
     justify-content: space-between;
 }
 
