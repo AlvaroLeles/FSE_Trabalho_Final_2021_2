@@ -7,7 +7,7 @@
 - Aline Helena Lermen - 180011961
 - Álvaro Leles Guimarães - 180096991
 
-# Nome
+## Nome
 Trabalho Final de Fundamentos de Sistemas Embarcados (2021/2)
 
 ## Descrição
